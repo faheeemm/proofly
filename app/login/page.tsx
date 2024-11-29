@@ -25,7 +25,7 @@ export default function LoginPage() {
   const { toast } = useToast();
   const router = useRouter();
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
