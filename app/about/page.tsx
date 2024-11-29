@@ -6,8 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function AboutPage() {
   const [showScrollHint, setShowScrollHint] = useState(true);
-  const membersRef = useRef(null);
-
+  const membersRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollHint(window.scrollY < 50);
