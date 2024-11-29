@@ -106,14 +106,12 @@ export default function ContactPage() {
         <form onSubmit={handleSubmit} className="w-full max-w-[400px] border rounded-lg p-6 shadow-sm bg-card">
           <div className="space-y-4">
             <Input
-              label="Name"
               placeholder="Enter your name"
               name="name"
               value={formData.name}
               onChange={handleChange}
             />
             <Input
-              label="Email"
               type="email"
               placeholder="Enter your email"
               name="email"
@@ -121,7 +119,6 @@ export default function ContactPage() {
               onChange={handleChange}
             />
             <Input
-              label="Phone Number"
               type="tel"
               placeholder="Enter your phone number"
               name="phone"
@@ -129,14 +126,12 @@ export default function ContactPage() {
               onChange={handleChange}
             />
             <Input
-              label="Receipt Number"
               placeholder="Enter your receipt number"
               name="receiptNumber"
               value={formData.receiptNumber}
               onChange={handleChange}
             />
             <Textarea
-              label="Message"
               placeholder="Write your message or issue with receipt"
               name="message"
               value={formData.message}
