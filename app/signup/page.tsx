@@ -30,7 +30,7 @@ export default function SignUpPage() {
   const router = useRouter();
   const { user } = useAuth(); // Use the AuthContext
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
