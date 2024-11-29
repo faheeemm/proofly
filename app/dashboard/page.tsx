@@ -129,7 +129,7 @@ interface QuickStatCardProps {
   title: string;
   value: string;
   description: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: React.ElementType;
 }
 
 function QuickStatCard({ title, value, description, icon: Icon }: QuickStatCardProps) {
