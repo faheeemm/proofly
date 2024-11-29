@@ -125,7 +125,14 @@ function DashboardPage() {
   );
 }
 
-function QuickStatCard({ title, value, description, icon: Icon }) {
+interface QuickStatCardProps {
+  title: string;
+  value: string;
+  description: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
+
+function QuickStatCard({ title, value, description, icon: Icon }: QuickStatCardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
