@@ -121,7 +121,7 @@ export function Navbar() {
           </button>
         </div>
         <div className="flex flex-col items-start space-y-4 p-4">
-          <Link href="/Features" className="text-sm font-medium" onClick={() => setMenuOpen(false)}>
+          <Link href="/how-it-works" className="text-sm font-medium" onClick={() => setMenuOpen(false)}>
             How it Works
           </Link>
           <Link href="/pricing" className="text-sm font-medium" onClick={() => setMenuOpen(false)}>
