@@ -46,7 +46,7 @@ export default function AboutPage() {
     },
     "Abdul Raqueeb": {
       linkedin: "https://www.linkedin.com/in/mohammed-abdul-raqueeb-895abb327/",
-      github: "https://github.com/abdul-raqueeb"
+      github: "https://github.com/raqueeeb"
     }
   };
 
