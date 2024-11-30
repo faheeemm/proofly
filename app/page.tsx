@@ -43,6 +43,11 @@ export default function Home() {
     };
   }, []);
 
+  const scrollToFeatures = () => {
+    const featuresSection = document.getElementById('features');
+    featuresSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <main className="flex min-h-screen flex-col z-10 relative">
       {/* Hero Section */}
@@ -84,12 +89,15 @@ export default function Home() {
         </div>
         {/* Scroll Hint */}
         {showScrollHint && (
-          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center">
-            <p className="text-sm text-muted-foreground animate-bounce">
+          <button 
+            onClick={scrollToFeatures}
+            className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center cursor-pointer group"
+          >
+            <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors animate-bounce">
               Discover Features
             </p>
-            <ArrowRight className="h-5 w-5 mx-auto text-muted-foreground rotate-90 animate-pulse" />
-          </div>
+            <ArrowRight className="h-5 w-5 mx-auto text-muted-foreground rotate-90 animate-pulse group-hover:text-foreground transition-colors" />
+          </button>
         )}
       </section>
 

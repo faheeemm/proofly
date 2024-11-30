@@ -54,13 +54,13 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold mb-4">Social</h3>
             <div className="flex space-x-4">
-              <Link href="https://twitter.com" className="text-muted-foreground hover:text-foreground">
+              <Link href="https://x.com/Ufraan1" className="text-muted-foreground hover:text-foreground">
                 <Twitter className="h-5 w-5" />
               </Link>
-              <Link href="https://linkedin.com" className="text-muted-foreground hover:text-foreground">
+              <Link href="https://www.linkedin.com/in/ufraaan/" className="text-muted-foreground hover:text-foreground">
                 <Linkedin className="h-5 w-5" />
               </Link>
-              <Link href="https://github.com" className="text-muted-foreground hover:text-foreground">
+              <Link href="https://github.com/moroii69/proofly" className="text-muted-foreground hover:text-foreground">
                 <Github className="h-5 w-5" />
               </Link>
             </div>
@@ -68,7 +68,7 @@ export function Footer() {
         </div>
         <div className="mt-8 pt-8 border-t">
           <p className="text-sm text-muted-foreground text-center">
-            © {new Date().getFullYear()} ReceiptGen. All rights reserved.
+            © {new Date().getFullYear()} Proofly. All rights reserved.
           </p>
         </div>
       </div>
