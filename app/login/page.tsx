@@ -4,7 +4,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { signInWithEmailAndPassword, sendSignInLinkToEmail, sendPasswordResetEmail } from "firebase/auth";
+import { 
+  signInWithEmailAndPassword, 
+  sendSignInLinkToEmail, 
+  sendPasswordResetEmail, 
+  isSignInWithEmailLink,
+  signInWithEmailLink
+} from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,8 +28,49 @@ const formSchema = z.object({
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+
+  // Check for Magic Link sign-in on component mount
+  const checkMagicLinkSignIn = async () => {
+    try {
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        let email = window.localStorage.getItem('emailForSignIn');
+        
+        // If email is not in localStorage, prompt user
+        if (!email) {
+          email = window.prompt('Please provide your email for confirmation');
+        }
+
+        if (email) {
+          const result = await signInWithEmailLink(auth, email, window.location.href);
+          
+          // Clear the email from localStorage
+          window.localStorage.removeItem('emailForSignIn');
+
+          toast({
+            title: "Success",
+            description: "Signed in successfully with Magic Link",
+          });
+
+          router.push('/dashboard');
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Could not complete Magic Link sign-in",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Run Magic Link check on component mount
+  useState(() => {
+    checkMagicLinkSignIn();
+  });
 
   const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,19 +133,25 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
       const actionCodeSettings = {
-        url: window.location.origin + '/dashboard',
+        url: window.location.origin + '/login', // Point back to login page
         handleCodeInApp: true,
       };
+      
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+      
+      // Store the email locally for later confirmation
       window.localStorage.setItem('emailForSignIn', email);
+      
       toast({
         title: "Magic Link Sent",
-        description: "Check your email for the login link.",
+        description: "Check your email for the login link. The link will be valid for 1 hour.",
       });
     } catch (error) {
+      const firebaseError = error as { code?: string, message?: string };
+      
       toast({
         title: "Error",
-        description: "Could not send magic link. Please try again.",
+        description: firebaseError.message || "Could not send magic link. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -197,6 +250,7 @@ export default function LoginPage() {
         )}
 
         <div className="flex flex-col space-y-4">
+          <div className="relative">
             <Button
               variant="outline"
               onClick={() => {
@@ -204,9 +258,28 @@ export default function LoginPage() {
                 if (email) handleMagicLink(email);
               }}
               disabled={isLoading}
+              className="w-full cursor-not-allowed"
+              onMouseMove={(e) => {
+                setHoverPosition({ x: e.clientX, y: e.clientY });
+                setIsHovering(true);
+              }}
+              onMouseLeave={() => setIsHovering(false)}
             >
               Sign in with Magic Link
             </Button>
+            {!isLoading && isHovering && (
+              <div 
+                className="fixed text-gray-500 text-sm bg-white/70 px-2 py-1 rounded-md shadow-md"
+                style={{ 
+                  left: `${hoverPosition.x + 10}px`, 
+                  top: `${hoverPosition.y + 10}px`,
+                  zIndex: 50
+                }}
+              >
+                Coming Soon
+              </div>
+            )}
+          </div>
           <Button
             variant="link"
             onClick={() => setShowForgotPassword(!showForgotPassword)}
