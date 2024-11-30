@@ -148,7 +148,7 @@ export default function AboutPage() {
         className="min-h-screen bg-background flex flex-col justify-center items-center px-6 sm:px-8 lg:px-12 text-center"
       >
         <h2 className="text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-12">
-          Our Crew
+          Meet the Crew
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl">
