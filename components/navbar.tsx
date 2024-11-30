@@ -42,7 +42,7 @@ export function Navbar() {
   if (!isMounted) return null;
 
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-[100]">
       <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
         <Link href="/" className="flex items-center space-x-0.1">
           <Image 
@@ -74,7 +74,6 @@ export function Navbar() {
           <Link href="/about" className="text-sm font-medium">
             About
           </Link>
-          <ThemeToggle />
           {user ? (
             <>
               <Button variant="ghost" asChild>
@@ -95,18 +94,19 @@ export function Navbar() {
               </Button>
             </>
           )}
+          <ThemeToggle />
         </div>
       </div>
       {/* Dimmed Background */}
       {menuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40"
+          className="fixed inset-0 bg-black/50 z-50"
           onClick={() => setMenuOpen(false)}
         ></div>
       )}
       {/* Side Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-background border-l transform transition-transform z-50 ${
+        className={`fixed top-0 right-0 h-full w-64 bg-background border-l z-[60] ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         } lg:hidden`}
       >
@@ -130,7 +130,6 @@ export function Navbar() {
           <Link href="/about" className="text-sm font-medium" onClick={() => setMenuOpen(false)}>
             About
           </Link>
-          <ThemeToggle />
           {user ? (
             <>
               <Button variant="ghost" asChild onClick={() => setMenuOpen(false)}>

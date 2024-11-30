@@ -7,8 +7,69 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Receipt, FileText, BarChart, Settings } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from 'next/link'
+import { useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "@/hooks/use-toast";
 
 function DashboardPage() {
+  const [preferences, setPreferences] = useState({
+    defaultCurrency: 'USD',
+    language: 'en',
+    darkMode: false,
+    receiptEmailNotifications: true
+  });
+
+  const [accountSettings, setAccountSettings] = useState({
+    name: 'John Doe',
+    email: 'johndoe@example.com',
+    businessName: ''
+  });
+
+  interface Preferences {
+    defaultCurrency: string;
+    language: string;
+    darkMode: boolean;
+    receiptEmailNotifications: boolean;
+  }
+
+  interface AccountSettings {
+    name: string;
+    email: string;
+    businessName: string;
+  }
+
+  const handlePreferencesChange = (field: keyof Preferences, value: string | boolean) => {
+    setPreferences(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleAccountSettingsChange = (field: keyof AccountSettings, value: string) => {
+    setAccountSettings(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const saveSettings = () => {
+    try {
+      toast({
+        title: "Settings Saved",
+        description: "Your preferences and account settings have been updated.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save settings. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="container mx-auto py-10">
       <motion.div
@@ -95,7 +156,7 @@ function DashboardPage() {
                   <Link href="/generate">
                     Generate New Receipt
                   </Link>
-                  </Button>
+                </Button>
                 <p className="text-muted-foreground">Receipt list will be implemented here</p>
               </CardContent>
             </Card>
@@ -114,15 +175,115 @@ function DashboardPage() {
           </TabsContent>
 
           <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>Settings</CardTitle>
-                <CardDescription>Manage your account and preferences</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Settings form will be implemented here</p>
-              </CardContent>
-            </Card>
+            <div className="space-y-6">
+              {/* User Preferences Section */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>User Preferences</CardTitle>
+                  <CardDescription>Customize your application experience</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Default Currency</Label>
+                      <Select 
+                        value={preferences.defaultCurrency}
+                        onValueChange={(value) => handlePreferencesChange('defaultCurrency', value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Currency" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="USD">USD ($)</SelectItem>
+                          <SelectItem value="EUR">EUR (€)</SelectItem>
+                          <SelectItem value="GBP">GBP (£)</SelectItem>
+                          <SelectItem value="JPY">JPY (¥)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Language</Label>
+                      <Select 
+                        value={preferences.language}
+                        onValueChange={(value) => handlePreferencesChange('language', value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="en">English</SelectItem>
+                          <SelectItem value="es">Spanish</SelectItem>
+                          <SelectItem value="fr">French</SelectItem>
+                          <SelectItem value="de">German</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        checked={preferences.darkMode}
+                        onCheckedChange={(checked) => handlePreferencesChange('darkMode', checked)}
+                      />
+                      <Label>Dark Mode</Label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        checked={preferences.receiptEmailNotifications}
+                        onCheckedChange={(checked) => handlePreferencesChange('receiptEmailNotifications', checked)}
+                      />
+                      <Label>Email Notifications for Receipts</Label>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Account Settings Section */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Account Settings</CardTitle>
+                  <CardDescription>Manage your account information</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Full Name</Label>
+                      <Input
+                        value={accountSettings.name}
+                        onChange={(e) => handleAccountSettingsChange('name', e.target.value)}
+                        placeholder="Enter your full name"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Email Address</Label>
+                      <Input
+                        type="email"
+                        value={accountSettings.email}
+                        onChange={(e) => handleAccountSettingsChange('email', e.target.value)}
+                        placeholder="Enter your email"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Business Name (Optional)</Label>
+                    <Input
+                      value={accountSettings.businessName || ''}
+                      onChange={(e) => handleAccountSettingsChange('businessName', e.target.value)}
+                      placeholder="Enter your business name"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="flex justify-end">
+                <Button onClick={saveSettings}>Save Settings</Button>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </motion.div>
@@ -173,4 +334,4 @@ const recentActivity = [
   }
 ];
 
-export default withAuth(DashboardPage);
+export default DashboardPage;

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FileText, Lock, Globe, Check, Clock, Share, ChevronRight } from "lucide-react";
+import { FileText, Lock, Globe, Check, Share, Clock, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function HowItWorksPage() {
@@ -39,99 +39,92 @@ export default function HowItWorksPage() {
   ];
 
   return (
-    <div className="min-h-screen py-24 px-4 sm:px-6 lg:px-8 mt-14">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-          How It Works
+    <div className="container mx-auto px-4 py-16 md:py-24">
+      {/* Header Section */}
+      <div className="text-center mb-12 md:mb-16">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+          Receipt Creation Process
         </h2>
-        <p className="mt-4 text-lg text-muted-foreground">
-          A seamless journey from receipt creation to financial management
+        <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+          A step-by-step journey from receipt creation to financial management
         </p>
       </div>
 
-      <div className="relative max-w-4xl mx-auto mt-16">
-        {/* Vertical Timeline */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 bg-gray-200 h-full" />
-        
-        {steps.map((step, index) => (
-          <motion.div
-            key={step.title}
-            className={`mb-12 flex items-center ${
-              index % 2 === 0 ? 'flex-row-reverse' : ''
-            } w-full`}
-            initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Timeline Marker */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-white border-4 border-blue-500 rounded-full flex items-center justify-center z-10">
-              <span className="text-blue-500 font-bold">{index + 1}</span>
-            </div>
-
-            {/* Card */}
-            <div 
-              className={`w-[calc(50%-60px)] border rounded-lg p-6 shadow-sm bg-card ${
-                index % 2 === 0 ? 'ml-auto mr-0' : 'mr-auto ml-0'
-              }`}
-            >
-              <div className="flex items-center mb-4">
-                <div className="mr-4 p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
-                  <step.icon className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="text-lg font-semibold">{step.title}</h3>
-              </div>
-              <p className="text-sm text-muted-foreground">{step.description}</p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Documentation Section */}
-      <div className="mt-16 text-center max-w-4xl mx-auto">
-        <h3 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 mb-8">
-          System Documentation
-        </h3>
-        
-        <div className="grid md:grid-cols-2 gap-6">
-          {[
-            {
-              title: "API Integration",
-              description: "Our robust API allows seamless integration with existing accounting and business management systems. Support for REST and GraphQL endpoints ensures flexibility for different technical environments.",
-            },
-            {
-              title: "Security Compliance",
-              description: "Fully compliant with GDPR, SOC 2, and PCI DSS standards. We implement multi-factor authentication, end-to-end encryption, and regular security audits to protect your financial data.",
-            },
-            {
-              title: "Data Retention",
-              description: "Receipts and financial documents are stored securely for 7 years, in compliance with international accounting regulations. Easy export and archiving options are available.",
-            },
-            {
-              title: "Performance",
-              description: "Optimized for speed with sub-second receipt generation and processing. Scalable infrastructure supports businesses of all sizes, from small startups to enterprise-level organizations.",
-            }
-          ].map((doc, idx) => (
+      {/* Enhanced Timeline */}
+      <div className="relative max-w-4xl mx-auto">
+        {/* Mobile Timeline */}
+        <div className="md:hidden">
+          {steps.map((step, index) => (
             <motion.div
-              key={doc.title}
-              className="border rounded-lg p-6 shadow-sm bg-card"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              whileHover={{ y: -5 }}
+              key={step.title}
+              className="mb-8 flex items-start"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <h4 className="text-lg font-semibold mb-4 flex items-center">
-                <ChevronRight className="mr-2 text-blue-500" /> 
-                {doc.title}
-              </h4>
-              <p className="text-sm text-muted-foreground">{doc.description}</p>
+              <div className="flex flex-col items-center mr-4">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center mb-2">
+                  <span className="text-white font-bold">{index + 1}</span>
+                </div>
+                {index < steps.length - 1 && (
+                  <div className="w-0.5 h-full bg-gray-300"></div>
+                )}
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center mb-2">
+                  <step.icon className="mr-3 text-blue-500" />
+                  <h3 className="text-lg font-semibold">{step.title}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">{step.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Desktop Timeline */}
+        <div className="hidden md:block relative">
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 bg-gray-200 h-full" />
+          {steps.map((step, index) => (
+            <motion.div
+              key={step.title}
+              className={`
+                mb-12 flex items-center relative
+                ${index % 2 === 0 ? 'flex-row-reverse' : ''}
+              `}
+              initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Numbered Marker */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white border-4 border-blue-500 rounded-full flex items-center justify-center z-10">
+                <span className="text-blue-500 font-bold text-lg">{index + 1}</span>
+              </div>
+
+              {/* Timeline Card */}
+              <div className={`
+                w-[calc(50%-60px)] 
+                border rounded-lg p-6 
+                shadow-sm bg-card
+                ${index % 2 === 0 ? 'ml-auto mr-0' : 'mr-auto ml-0'}
+              `}>
+                <div className="flex items-center mb-4">
+                  <div className="mr-4 p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+                    <step.icon className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold">{step.title}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">{step.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
 
+      {/* Call to Action */}
       <div className="text-center mt-12">
-        <Button>Get Started</Button>
+        <Button className="px-6 py-3 text-base">Get Started</Button>
       </div>
     </div>
   );
