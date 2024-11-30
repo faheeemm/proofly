@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Receipt, LogOut, Menu, X } from "lucide-react";
@@ -9,11 +9,19 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 import { ThemeToggle } from "@/components/theme-toggle";
+import Image from "next/image"; 
+import { useTheme } from "next-themes"; 
 
 export function Navbar() {
   const { user } = useAuth();
   const { toast } = useToast();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme(); 
+  const [isMounted, setIsMounted] = useState(false); 
+
+  useEffect(() => {
+    setIsMounted(true); 
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -31,13 +39,21 @@ export function Navbar() {
     }
   };
 
+  if (!isMounted) return null;
+
   return (
     <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center space-x-2">
-          <Receipt className="h-6 w-6" />
+        <Link href="/" className="flex items-center space-x-0.1">
+          <Image 
+            src={theme === "dark" ? "https://i.imgur.com/ZEC13Py.png" : "https://i.imgur.com/CfszNeV.png"} 
+            width={50} 
+            height={50} 
+            alt="Proofly Logo" 
+          />
           <span className="font-bold">Proofly</span>
         </Link>
+
         <div className="flex-1" />
         {/* Mobile Menu Toggle */}
         <button
