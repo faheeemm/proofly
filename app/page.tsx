@@ -82,7 +82,7 @@ export default function Home() {
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link href="#features">Learn more</Link>
+                <Link href="/how-it-works">Learn more</Link>
               </Button>
             </motion.div>
           </motion.div>

@@ -19,6 +19,11 @@ export function Footer() {
                   Pricing
                 </Link>
               </li>
+              <li>
+                <Link href="/how-it-works" className="text-sm text-muted-foreground hover:text-foreground">
+                How it works
+                </Link>
+              </li>
             </ul>
           </div>
           <div>

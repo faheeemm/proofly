@@ -65,8 +65,8 @@ export function Navbar() {
         </button>
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center space-x-4">
-          <Link href="/features" className="text-sm font-medium">
-            Features
+          <Link href="/how-it-works" className="text-sm font-medium">
+            How it works
           </Link>
           <Link href="/pricing" className="text-sm font-medium">
             Pricing
@@ -121,8 +121,8 @@ export function Navbar() {
           </button>
         </div>
         <div className="flex flex-col items-start space-y-4 p-4">
-          <Link href="/features" className="text-sm font-medium" onClick={() => setMenuOpen(false)}>
-            Features
+          <Link href="/Features" className="text-sm font-medium" onClick={() => setMenuOpen(false)}>
+            How it Works
           </Link>
           <Link href="/pricing" className="text-sm font-medium" onClick={() => setMenuOpen(false)}>
             Pricing

@@ -11,7 +11,7 @@ import Head from "next/head"; // Import Head from next/head
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Receipt Generator - Professional Invoices & Bills",
+  title: "Proofly -  - Professional Invoices & Bills",
   description: "Create, customize, and manage receipts for your business with our powerful receipt generator.",
 };
 

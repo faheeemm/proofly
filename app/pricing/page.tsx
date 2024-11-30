@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const plans = [
   {
     name: "Free",
-    price: "$0",
+    price: "₹499",
     description: "Perfect for getting started",
     features: [
       { name: "5 receipts per month", included: true },
@@ -22,7 +22,7 @@ const plans = [
   },
   {
     name: "Pro",
-    price: "$29",
+    price: "₹1499",
     description: "Best for growing businesses",
     features: [
       { name: "Unlimited receipts", included: true },
@@ -37,7 +37,7 @@ const plans = [
   },
   {
     name: "Enterprise",
-    price: "$99",
+    price: "₹4999",
     description: "For large organizations",
     features: [
       { name: "Unlimited receipts", included: true },
@@ -54,7 +54,7 @@ const plans = [
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen py-24 px-4 sm:px-6 lg:px-8 mt-14">
+    <div className="min-h-screen py-24 px-4 sm:px-6 lg:px-8 mt-5">
       <div className="text-center">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
           Simple, transparent pricing
