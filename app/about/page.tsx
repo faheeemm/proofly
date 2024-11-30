@@ -1,125 +1,211 @@
-  "use client";
+"use client";
 
-  import { motion } from "framer-motion";
-  import { useState, useEffect, useRef } from "react";
-  import { ArrowRight, Linkedin, Github } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { ArrowRight, Linkedin, Github, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from 'next/link'
+export default function AboutPage() {
+  const [showScrollHint, setShowScrollHint] = useState(true);
+  const membersRef = useRef<HTMLDivElement>(null);
 
-  export default function AboutPage() {
-    const [showScrollHint, setShowScrollHint] = useState(true);
-    const membersRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-      const handleScroll = () => {
-        setShowScrollHint(window.scrollY < 50);
-      };
-
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []); 
-
-    const scrollToMembers = () => {
-      membersRef.current?.scrollIntoView({ behavior: 'smooth' });
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollHint(window.scrollY < 50);
     };
 
-    type MemberLinks = {
-      [key: string]: {
-        linkedin: string;
-        github: string;
-      };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
+  }, []); 
 
-    const memberLinks: MemberLinks = {
-      "Mohammed Ufraan": {
-        linkedin: "https://www.linkedin.com/in/ufraaan/",
-        github: "https://github.com/moroii69"
-      },
-      "Faheem Ahmed": {
-        linkedin: "https://www.linkedin.com/in/faheeem/",
-        github: "https://github.com/faheemahm"
-      },
-      "Mohd Abrar": {
-        linkedin: "https://www.linkedin.com/in/shaik-mohd-abrar-019812294/",
-        github: "https://github.com/Abrarr12"
-      },
-      "Abdul Raqueeb": {
-        linkedin: "https://www.linkedin.com/in/mohammed-abdul-raqueeb-895abb327/",
-        github: "https://github.com/abdul-raqueeb"
-      }
+  const scrollToMembers = () => {
+    membersRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  type MemberLinks = {
+    [key: string]: {
+      linkedin: string;
+      github: string;
     };
+  };
 
-    return (
-      <div className="min-h-screen flex flex-col">
-        {/* Full Screen About Section */}
-        <div className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 text-center mt-4">
-          <div className="max-w-4xl">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-              About Us
-            </h2>
-            <p className="mt-1 text-lg text-muted-foreground max-w-2xl mx-auto">
-              We are a team committed to building innovative solutions for businesses of all sizes. Our focus is on delivering cutting-edge technology and services that help streamline operations and drive success.
-            </p>
-          </div>
+  const memberLinks: MemberLinks = {
+    "Mohammed Ufraan": {
+      linkedin: "https://www.linkedin.com/in/ufraaan/",
+      github: "https://github.com/moroii69"
+    },
+    "Faheem Ahmed": {
+      linkedin: "https://www.linkedin.com/in/faheeem/",
+      github: "https://github.com/faheemahm"
+    },
+    "Mohd Abrar": {
+      linkedin: "https://www.linkedin.com/in/shaik-mohd-abrar-019812294/",
+      github: "https://github.com/Abrarr12"
+    },
+    "Abdul Raqueeb": {
+      linkedin: "https://www.linkedin.com/in/mohammed-abdul-raqueeb-895abb327/",
+      github: "https://github.com/abdul-raqueeb"
+    }
+  };
 
-          {showScrollHint && (
-            <div 
-              onClick={scrollToMembers}
-              className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-center cursor-pointer"
-            >
-              <p className="text-sm text-muted-foreground animate-bounce">
-                Discover Team Members
-              </p>
-              <ArrowRight className="h-5 w-5 mx-auto text-muted-foreground rotate-90 animate-pulse" />
-            </div>
-          )}
+  const teamMembers = [
+    { 
+      name: "Mohammed Ufraan", 
+      role: "Project Lead & Full-Stack Developer", 
+      img: "https://i.imgur.com/wPdloI2.jpeg",
+      description: "Visionary leader driving our technical strategy and overall product direction."
+    },
+    { 
+      name: "Faheem Ahmed", 
+      role: "Frontend Developer & Backend Engineer", 
+      img: "https://i.imgur.com/kPbPY1W.jpeg",
+      description: "UI/UX maestro and backend wizard, ensuring seamless user experiences."
+    },
+    { 
+      name: "Mohd Abrar", 
+      role: "Backend Developer & QA Specialist", 
+      img: "https://i.imgur.com/Nm7NbDF.jpeg",
+      description: "Backend infrastructure expert with a keen eye for quality and performance."
+    },
+    { 
+      name: "Abdul Raqueeb", 
+      role: "Backend Developer & QA Specialist", 
+      img: "https://i.imgur.com/fgEZbMd.jpeg",
+      description: "Reliability and performance optimization specialist."
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 text-center relative"
+      >
+        {/* animation - slide-in(down) on page initial render can be added with relayive colors later */}
+        {/* <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 opacity-50 -z-10"></div> */}
+        
+        <div className="max-w-4xl relative">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
+          >
+            About Our Journey
+          </motion.h2>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
+            We are a passionate team of innovators dedicated to transforming business operations through cutting-edge technology. Our mission is to provide intuitive, powerful solutions that empower businesses to thrive in a digital world.
+          </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            className="mt-8 flex justify-center space-x-4"
+          >
+            <Button variant="default">
+              <Link href="/pricing">
+                Explore Premium
+              </Link>
+            </Button>
+
+            <Button variant="outline">
+              <Link href="/contact">
+                Contact Us
+              </Link>
+            </Button>
+          </motion.div>
         </div>
 
-        {/* Our Project Members Section */}
-        <div ref={membersRef} className="min-h-screen flex flex-col justify-center items-center px-6 sm:px-8 lg:px-12 text-center">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-            Our Project Members
-          </h2>
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl">
-            {[
-              { name: "Mohammed Ufraan", role: "Project Lead & Full-Stack Developer", img: "https://i.imgur.com/wPdloI2.jpeg" },
-              { name: "Faheem Ahmed", role: "Frontend Developer & Backend Engineer", img: "https://i.imgur.com/kPbPY1W.jpeg" },
-              { name: "Mohd Abrar", role: "Backend Developer & Quality Assurance Specialist", img: "https://i.imgur.com/Nm7NbDF.jpeg" },
-              { name: "Abdul Raqueeb", role: "Backend Developer & Quality Assurance Specialist", img: "https://i.imgur.com/fgEZbMd.jpeg" }
-            ].map((member) => (
-              <div key={member.name} className="border rounded-lg p-8 shadow-lg bg-card">
-                <div className="flex flex-col items-center">
-                  <div className="w-28 h-28 rounded-full mb-6">
-                    <img 
-                      src={member.img}
-                      alt={member.name}
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                  </div>
-                  <h4 className="text-2xl font-semibold">{member.name}</h4>
-                  <p className="text-md text-muted-foreground">{member.role}</p>
-                  <div className="flex space-x-4 mt-4">
-                    <a 
-                      href={memberLinks[member.name].linkedin} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="hover:text-blue-600 transition-colors"
-                    >
-                      <Linkedin className="h-6 w-6" />
-                    </a>
-                    <a 
-                      href={memberLinks[member.name].github} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="hover:text-gray-600 transition-colors"
-                    >
-                      <Github className="h-6 w-6" />
-                    </a>
-                  </div>
+        {showScrollHint && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            onClick={scrollToMembers}
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-center cursor-pointer group"
+          >
+            <p className="text-sm text-muted-foreground group-hover:text-primary transition-colors mb-25 mt-5">
+              Meet the Team
+            </p>
+            <ChevronDown className="h-6 w-6 mx-auto text-muted-foreground group-hover:text-primary animate-bounce" />
+          </motion.div>
+        )}
+      </motion.div>
+
+      {/* Team Section */}
+      <div 
+        ref={membersRef} 
+        className="min-h-screen bg-background flex flex-col justify-center items-center px-6 sm:px-8 lg:px-12 text-center"
+      >
+        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-12">
+          Our Talented Team
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl">
+          {teamMembers.map((member, index) => (
+            <motion.div
+              key={member.name}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: index * 0.2 
+              }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 10px 20px rgba(0,0,0,0.1)"
+              }}
+              className="bg-card border rounded-2xl p-6 shadow-sm transform transition-all duration-300 hover:shadow-lg group"
+            >
+              <div className="relative mb-6">
+                <div className="w-32 h-32 mx-auto rounded-full border-4 border-primary/20 overflow-hidden">
+                  <img 
+                    src={member.img}
+                    alt={member.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
               </div>
-            ))}
-          </div>
+              
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-foreground">{member.name}</h3>
+                <p className="text-sm text-muted-foreground mb-4">{member.role}</p>
+                <p className="text-xs text-muted-foreground mb-4">{member.description}</p>
+                
+                <div className="flex justify-center space-x-4 mt-4">
+                  <a 
+                    href={memberLinks[member.name].linkedin} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 transition-colors"
+                  >
+                    <Linkedin className="h-5 w-5" />
+                  </a>
+                  <a 
+                    href={memberLinks[member.name].github} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-gray-700 hover:text-black transition-colors"
+                  >
+                    <Github className="h-5 w-5" />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}

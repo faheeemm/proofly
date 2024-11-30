@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Receipt, FileText, BarChart, Settings } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from 'next/link'
 
 function DashboardPage() {
   return (
@@ -90,7 +91,11 @@ function DashboardPage() {
                 <CardDescription>Manage and view all your generated receipts</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="mb-4">Generate New Receipt</Button>
+                <Button className="mb-4">
+                  <Link href="/generate">
+                    Generate New Receipt
+                  </Link>
+                  </Button>
                 <p className="text-muted-foreground">Receipt list will be implemented here</p>
               </CardContent>
             </Card>

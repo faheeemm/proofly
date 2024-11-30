@@ -197,16 +197,16 @@ export default function LoginPage() {
         )}
 
         <div className="flex flex-col space-y-4">
-          <Button
-            variant="outline"
-            onClick={() => {
-              const email = (document.querySelector('input[type="email"]') as HTMLInputElement)?.value;
-              if (email) handleMagicLink(email);
-            }}
-            disabled={isLoading}
-          >
-            Sign in with Magic Link
-          </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                const email = (document.querySelector('input[type="email"]') as HTMLInputElement)?.value;
+                if (email) handleMagicLink(email);
+              }}
+              disabled={isLoading}
+            >
+              Sign in with Magic Link
+            </Button>
           <Button
             variant="link"
             onClick={() => setShowForgotPassword(!showForgotPassword)}
