@@ -61,7 +61,7 @@ export default function AboutPage() {
     { 
         name: "Faheem Ahmed", 
         role: "Frontend Developer & Backend Engineer", 
-        img: "https://i.imgur.com/kPbPY1W.jpeg",
+        img: "https://i.imgur.com/TcoZO6R.jpeg",
         // description: "\"The world is a bug that needs fixing.\""
     },
     { 
