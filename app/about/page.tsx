@@ -52,30 +52,32 @@ export default function AboutPage() {
 
   const teamMembers = [
     { 
-      name: "Mohammed Ufraan", 
-      role: "Project Lead & Full-Stack Developer", 
-      img: "https://i.imgur.com/wPdloI2.jpeg",
-      description: "Visionary leader driving our technical strategy and overall product direction."
+        name: "Mohammed Ufraan", 
+        role: "Project Lead & Full-Stack Developer", 
+        img: "https://i.imgur.com/wPdloI2.jpeg",
+        // description: "\"Control is an illusion.\" ",
+
     },
     { 
-      name: "Faheem Ahmed", 
-      role: "Frontend Developer & Backend Engineer", 
-      img: "https://i.imgur.com/kPbPY1W.jpeg",
-      description: "UI/UX maestro and backend wizard, ensuring seamless user experiences."
+        name: "Faheem Ahmed", 
+        role: "Frontend Developer & Backend Engineer", 
+        img: "https://i.imgur.com/kPbPY1W.jpeg",
+        // description: "\"The world is a bug that needs fixing.\""
     },
     { 
-      name: "Mohd Abrar", 
-      role: "Backend Developer & QA Specialist", 
-      img: "https://i.imgur.com/Nm7NbDF.jpeg",
-      description: "Backend infrastructure expert with a keen eye for quality and performance."
+        name: "Mohd Abrar", 
+        role: "QA Specialist", 
+        img: "https://i.imgur.com/Nm7NbDF.jpeg",
+        // description: "\"Excellence is not an act, but a habit.\" "
     },
     { 
-      name: "Abdul Raqueeb", 
-      role: "Backend Developer & QA Specialist", 
-      img: "https://i.imgur.com/fgEZbMd.jpeg",
-      description: "Reliability and performance optimization specialist."
+        name: "Abdul Raqueeb", 
+        role: "Backend Developer & QA Specialist", 
+        img: "https://i.imgur.com/fgEZbMd.jpeg",
+        // description: "\"Details make perfection, and perfection is not a detail.\""
     }
-  ];
+];
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -86,9 +88,6 @@ export default function AboutPage() {
         transition={{ duration: 0.7 }}
         className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 text-center relative"
       >
-        {/* animation - slide-in(down) on page initial render can be added with relayive colors later */}
-        {/* <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 opacity-50 -z-10"></div> */}
-        
         <div className="max-w-4xl relative">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -96,7 +95,7 @@ export default function AboutPage() {
             transition={{ delay: 0.2 }}
             className="text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
           >
-            About Our Journey
+            About Us
           </motion.h2>
           
           <motion.p
@@ -133,9 +132,9 @@ export default function AboutPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             onClick={scrollToMembers}
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-center cursor-pointer group"
+            className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center cursor-pointer group"
           >
-            <p className="text-sm text-muted-foreground group-hover:text-primary transition-colors mb-25 mt-5">
+            <p className="text-sm text-muted-foreground group-hover:text-primary transition-colors mb-2 mt-0">
               Meet the Team
             </p>
             <ChevronDown className="h-6 w-6 mx-auto text-muted-foreground group-hover:text-primary animate-bounce" />
@@ -143,13 +142,13 @@ export default function AboutPage() {
         )}
       </motion.div>
 
-      {/* Team Section */}
+      {/* Rest of the code remains the same */}
       <div 
         ref={membersRef} 
         className="min-h-screen bg-background flex flex-col justify-center items-center px-6 sm:px-8 lg:px-12 text-center"
       >
         <h2 className="text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-12">
-          Our Talented Team
+          Our Crew
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl">
@@ -181,7 +180,7 @@ export default function AboutPage() {
               <div className="text-center">
                 <h3 className="text-xl font-semibold text-foreground">{member.name}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{member.role}</p>
-                <p className="text-xs text-muted-foreground mb-4">{member.description}</p>
+                {/* <p className="text-xs text-muted-foreground mb-4">{member.description}</p> */}
                 
                 <div className="flex justify-center space-x-4 mt-4">
                   <a 
