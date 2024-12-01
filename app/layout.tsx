@@ -6,12 +6,13 @@ import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/hooks/use-auth";
-import Head from "next/head"; // Import Head from next/head
+import Head from "next/head";
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Proofly -  - Professional Invoices & Bills",
+  title: "Proofly - Professional Invoices & Bills",
   description: "Create, customize, and manage receipts for your business with our powerful receipt generator.",
 };
 
@@ -36,6 +37,7 @@ export default function RootLayout({
             <Toaster />
           </AuthProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
