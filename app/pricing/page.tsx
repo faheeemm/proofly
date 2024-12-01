@@ -10,10 +10,10 @@ const plans = [
     price: "₹499",
     description: "Perfect for getting started",
     features: [
-      { name: "5 receipts per month", included: true },
+      { name: "30 receipts per month", included: true },
       { name: "Basic templates", included: true },
       { name: "Email support", included: true },
-      { name: "Custom templates", included: false },
+      { name: "Custom templates", included: true },
       { name: "Analytics dashboard", included: false },
       { name: "Priority support", included: false },
       { name: "API access", included: false },
