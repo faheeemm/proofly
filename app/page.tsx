@@ -102,7 +102,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 bg-black/50 z-0">
+      <section id="features" className="py-24 bg-black/0 z-0">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             className="mx-auto max-w-2xl text-center"
@@ -122,7 +122,7 @@ export default function Home() {
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                className="flex flex-col items-center p-8 rounded-lg bg-black/40 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-colors"
+                className="flex flex-col items-center p-8 rounded-lg bg-black/10 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-colors"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

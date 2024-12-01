@@ -4,7 +4,7 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --background-start-rgb: 255, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
 
@@ -78,5 +78,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  .light .mx-auto.max-w-7xl.px-6.lg\:px-8 {
+    background-color: white;
   }
 }
