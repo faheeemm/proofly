@@ -10,11 +10,6 @@ export function Footer() {
             <h3 className="text-sm font-semibold mb-4">Product</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/how-it-works" className="text-sm text-muted-foreground hover:text-foreground">
-                  How it works
-                </Link>
-              </li>
-              <li>
                 <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground">
                   Pricing
                 </Link>
