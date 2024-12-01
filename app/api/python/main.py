@@ -1,44 +1,40 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List, Optional
+from fastapi.middleware.cors import CORSMiddleware
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials
 import json
 import os
+from .models import Receipt
+from .services import receipt_service, dashboard_service
 
-# Initialize Firebase Admin
 cred = credentials.Certificate(json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT')))
 firebase_admin.initialize_app(cred)
-db = firestore.client()
 
 app = FastAPI()
 
-class Receipt(BaseModel):
-    user_id: str
-    customer_name: str
-    date: str
-    items: List[dict]
-    total: float
-    currency: str
-    notes: Optional[str] = None
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/receipts/")
 async def create_receipt(receipt: Receipt):
-    try:
-        doc_ref = db.collection('receipts').document()
-        doc_ref.set(receipt.dict())
-        return {"id": doc_ref.id, "message": "Receipt created successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return await receipt_service.create_receipt(receipt)
 
 @app.get("/receipts/{user_id}")
 async def get_receipts(user_id: str):
-    try:
-        receipts_ref = db.collection('receipts').where('user_id', '==', user_id)
-        docs = receipts_ref.stream()
-        return [{"id": doc.id, **doc.to_dict()} for doc in docs]
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return await receipt_service.get_user_receipts(user_id)
+
+@app.get("/analytics/{user_id}")
+async def get_analytics(user_id: str):
+    return await receipt_service.get_analytics(user_id)
+
+@app.get("/dashboard/{user_id}")
+async def get_dashboard_data(user_id: str):
+    return await dashboard_service.get_dashboard_data(user_id)
 
 if __name__ == "__main__":
     import uvicorn
