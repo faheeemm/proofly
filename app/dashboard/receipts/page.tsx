@@ -11,21 +11,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus, Trash2, FileText, Pencil } from "lucide-react";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-interface Item {
-  description: string;
-  quantity: number;
-  price: number;
-  tax: number;
-}
-
-interface ReceiptForm {
-  customerName: string;
-  customerEmail: string;
-  items: Item[];
-  currency: string;
-  notes: string;
-}
+import { ReceiptPreview } from "./components/ReceiptPreview";
+import { ReceiptForm, Item } from "./types";
 
 const currencies = [
   { code: "USD", symbol: "$", name: "US Dollar" },
@@ -131,21 +118,23 @@ export default function ReceiptsPage() {
         return sum + itemTotal + tax;
       }, 0);
 
+      const idToken = await user?.getIdToken();
+
       const receipt = {
-        user_id: user?.uid,
         customer_name: form.customerName,
         customer_email: form.customerEmail,
         items: form.items,
-        total,
         currency: form.currency,
         notes: form.notes,
-        date: new Date().toISOString(),
         template_id: selectedTemplate,
       };
 
       const response = await fetch("/api/receipts", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${idToken}`
+        },
         body: JSON.stringify(receipt),
       });
 
@@ -383,11 +372,15 @@ export default function ReceiptsPage() {
             <CardTitle>Receipt Preview</CardTitle>
             <CardDescription>Live preview of your receipt</CardDescription>
           </CardHeader>
-          <CardContent className="bg-white text-black p-8 rounded-lg min-h-[600px]">
-            {/* Preview content will be implemented here */}
-            <div className="border-2 border-dashed border-gray-200 rounded-lg h-full flex items-center justify-center">
-              <p className="text-gray-500">Preview will be shown here</p>
-            </div>
+          <CardContent className="bg-gray-50 rounded-lg">
+            <ReceiptPreview
+              customerName={form.customerName}
+              customerEmail={form.customerEmail}
+              items={form.items}
+              currency={form.currency}
+              notes={form.notes}
+              templateId={selectedTemplate}
+            />
           </CardContent>
         </Card>
       </motion.div>

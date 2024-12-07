@@ -55,7 +55,7 @@ export default function LoginPage() {
             description: "Signed in successfully with Magic Link",
           });
 
-          router.push('/dashboard');
+          router.push('/docs');
         }
       }
     } catch (error) {
@@ -87,11 +87,11 @@ export default function LoginPage() {
       });
 
       // Redirect to dashboard
-      router.push('/dashboard');
+      router.push('/docs');
       
       // Fallback redirection
       setTimeout(() => {
-        window.location.href = '/dashboard';
+        window.location.href = '/docs';
       }, 100);
 
     } catch (error) {
@@ -287,7 +287,7 @@ export default function LoginPage() {
             {showForgotPassword ? "Back to Login" : "Forgot Password?"}
           </Button>
           <div className="text-center text-sm text-muted-foreground">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/signup" className="text-primary hover:underline">
               Sign up
             </Link>

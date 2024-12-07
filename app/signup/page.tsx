@@ -36,7 +36,7 @@ export default function SignUpPage() {
 
   // If user is already logged in, redirect to dashboard or home
   if (user) {
-    router.replace('/dashboard'); // or wherever you want to redirect logged-in users
+    router.replace('/docs'); // or wherever you want to redirect logged-in users
     return null;
   }
 
@@ -54,11 +54,11 @@ export default function SignUpPage() {
       });
 
       // Multiple redirection attempts
-      router.push('/dashboard');
+      router.push('/docs');
       
       // Fallback redirection
       setTimeout(() => {
-        window.location.href = '/dashboard';
+        window.location.href = '/docs';
       }, 100);
 
     } catch (error) {
