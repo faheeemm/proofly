@@ -10,10 +10,16 @@ import { useToast } from "@/hooks/use-toast"; // Use the useToast hook for toast
 export default function ContactPage() {
   const [countdown, setCountdown] = useState(3); // Set initial countdown to 3 seconds
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", receiptNumber: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    receiptNumber: "",
+    message: "",
+  });
   const { toast } = useToast(); // Get the toast function from the hook
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -41,40 +47,64 @@ export default function ContactPage() {
       return;
     }
 
-    // Display success toast with countdown
-    toast({
-      title: "Form Submitted",
-      description: (
-        <>
-          Redirecting in {countdown}s.{" "}
-          <a
-            href="/"
-            className="underline text-white"
-            onClick={(e) => {
-              e.preventDefault(); // Prevent automatic redirection
-              window.location.href = "/";
-            }}
-          >
-            Click here
-          </a>
-          {" to go back."}
-        </>
-      ),
-      variant: "success", // Use the success variant for green toast
-      className: "bg-green-700", // Darker green background
-    });
-
-    // Start the countdown
-    const interval = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev === 1) {
-          clearInterval(interval);
-          // Redirect after countdown finishes
-          window.location.href = "/"; // Redirect to the home page
-        }
-        return prev - 1;
+    // Send the form data to the API route
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-    }, 1000); // Countdown interval (1 second)
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      // Display success toast with countdown
+      toast({
+        title: "Form Submitted",
+        description: (
+          <>
+            Redirecting in {countdown}s.{" "}
+            <a
+              href="/"
+              className="underline text-white"
+              onClick={(e) => {
+                e.preventDefault(); // Prevent automatic redirection
+                window.location.href = "/";
+              }}
+            >
+              Click here
+            </a>
+            {" to go back."}
+          </>
+        ),
+        variant: "success", // Use the success variant for green toast
+        className: "bg-green-700", // Darker green background
+      });
+
+      // Start the countdown
+      const interval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev === 1) {
+            clearInterval(interval);
+            // Redirect after countdown finishes
+            window.location.href = "/"; // Redirect to the home page
+          }
+          return prev - 1;
+        });
+      }, 1000); // Countdown interval (1 second)
+
+    } catch (error) {
+      toast({
+        title: "Error sending message",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
+
+    setIsSubmitting(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
