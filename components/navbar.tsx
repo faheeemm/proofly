@@ -77,7 +77,7 @@ export function Navbar() {
           {user ? (
             <>
               <Button variant="ghost" asChild>
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/docs">Docs</Link>
               </Button>
               <Button variant="outline" onClick={handleSignOut}>
                 <LogOut className="h-4 w-4 mr-2" />
@@ -133,7 +133,7 @@ export function Navbar() {
           {user ? (
             <>
               <Button variant="ghost" asChild onClick={() => setMenuOpen(false)}>
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/docs">Docs</Link>
               </Button>
               <Button
                 variant="outline"
