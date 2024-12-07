@@ -77,7 +77,7 @@ export default function Home() {
                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
                 asChild
               >
-                <Link href="/dashboard">
+                <Link href="/docs">
                   Start Generating <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
