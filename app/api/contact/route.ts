@@ -2,20 +2,53 @@ import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const { name, email, phone, receiptNumber, message } = await request.json();
+  let parsedBody;
+  try {
+    parsedBody = await request.json();
+  } catch (error) {
+    console.error('Invalid JSON in request:', error);
+    return NextResponse.json({ success: false, error: 'Invalid JSON format in request body.' }, { status: 400 });
+  }
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'kurosen930@gmail.com', 
-      pass: 'wviupaflyroxesfw',
-    },
-  });
+  const { name, email, phone, receiptNumber, message } = parsedBody;
+
+  if (!name || !email || !phone || !receiptNumber || !message) {
+    const missingFields = [];
+    if (!name) missingFields.push('name');
+    if (!email) missingFields.push('email');
+    if (!phone) missingFields.push('phone');
+    if (!receiptNumber) missingFields.push('receiptNumber');
+    if (!message) missingFields.push('message')
+
+    return NextResponse.json({
+      success: false,
+      error: `Missing required fields: ${missingFields.join(', ')}`,
+    }, { status: 400 });
+  }
+
+  let transporter;
+  try {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'kurosen930@gmail.com',
+        pass: 'wviupaflyroxesfw',
+      },
+    });
+
+    await transporter.verify();
+  } catch (error) {
+    console.error('Error setting up email transporter: ', error);
+    return NextResponse.json({
+      success: false,
+      error: 'Failed to setup email transporter. Please try again later.',
+    }, { status: 500 });
+  }
 
   const mailOptions = {
-    from: 'kurosen930@gmail.com', 
+    from: 'kurosen930@gmail.com',
     to: 'kurosen930@gmail.com',  
-    subject: 'New Contact Form Submission',
+    subject: 'PROOFLY New Contact Form Submission',
     text: `
       Name: ${name}
       Email: ${email}
@@ -35,7 +68,7 @@ export async function POST(request: Request) {
     console.error('Error sending email: ', error);
     return NextResponse.json({
       success: false,
-      error: (error as Error).message,
-    });
+      error: (error as Error).message || 'Unknown error sending email.',
+    }, { status: 500 });
   }
 }
